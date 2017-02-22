@@ -39,7 +39,7 @@ namespace Hyperion.Compilation
                 return Expression.New(defaultCtor);
             }
 #endif
-            var emptyObjectMethod = typeof(TypeEx).GetTypeInfo().GetMethod(nameof(TypeEx.GetEmptyObject));
+            var emptyObjectMethod = typeof(TypeEx).GetMethod(nameof(TypeEx.GetEmptyObject));
             var emptyObject = Expression.Call(null, emptyObjectMethod, type.ToConstant());
 
             return emptyObject;

@@ -17,7 +17,7 @@ namespace Hyperion.SerializerFactories
 {
     public class ExceptionSerializerFactory : ValueSerializerFactory
     {
-        private static readonly TypeInfo ExceptionTypeInfo = typeof(Exception).GetTypeInfo();
+        private static readonly Type ExceptionTypeInfo = typeof(Exception);
         private readonly FieldInfo _className;
         private readonly FieldInfo _innerException;
         private readonly FieldInfo _stackTraceString;
@@ -33,7 +33,7 @@ namespace Hyperion.SerializerFactories
             _stackTraceString = ExceptionTypeInfo.GetField("_stackTraceString", BindingFlagsEx.All);
         }
 
-        public override bool CanSerialize(Serializer serializer, Type type) => ExceptionTypeInfo.IsAssignableFrom(type.GetTypeInfo());
+        public override bool CanSerialize(Serializer serializer, Type type) => ExceptionTypeInfo.IsAssignableFrom(type);
 
         public override bool CanDeserialize(Serializer serializer, Type type) => CanSerialize(serializer, type);
 

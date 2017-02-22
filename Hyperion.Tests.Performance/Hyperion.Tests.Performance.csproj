@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net452</TargetFramework>
     <AssemblyName>Hyperion.Tests.Performance</AssemblyName>
   </PropertyGroup>
 
@@ -17,10 +17,14 @@
     <PackageReference Include="NBench" Version="0.3.4" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <DefineConstants>$(DefineConstants);NBENCH</DefineConstants>
+  </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>

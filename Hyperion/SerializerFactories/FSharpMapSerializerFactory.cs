@@ -38,12 +38,11 @@ namespace Hyperion.SerializerFactories
         private static Type GetGenericArgument(Type type,int index)
         {
             return type
-                .GetTypeInfo()
                 .GetInterfaces()
                 .Where(
                     intType =>
                         intType.GetTypeInfo().IsGenericType && intType.GetGenericTypeDefinition() == typeof(IDictionary<,>))
-                .Select(intType => intType.GetTypeInfo().GetGenericArguments()[index])
+                .Select(intType => intType.GetGenericArguments()[index])
                 .FirstOrDefault();
         }
 
@@ -72,11 +71,11 @@ namespace Hyperion.SerializerFactories
             var arrType = tupleType.MakeArrayType();
 
             var mapModule = type.GetTypeInfo().Assembly.GetType("Microsoft.FSharp.Collections.MapModule");
-            var ofArray = mapModule.GetTypeInfo().GetMethod("OfArray");
+            var ofArray = mapModule.GetMethod("OfArray");
             var ofArrayConcrete = ofArray.MakeGenericMethod(keyType,valueType);
             var ofArrayCompiled = CompileToDelegate(ofArrayConcrete, arrType);
            
-            var toArray = mapModule.GetTypeInfo().GetMethod("ToArray");
+            var toArray = mapModule.GetMethod("ToArray");
             var toArrayConcrete = toArray.MakeGenericMethod(keyType,valueType);
             var toArrayCompiled = CompileToDelegate(toArrayConcrete, type);
 

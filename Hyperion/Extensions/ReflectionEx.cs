@@ -38,7 +38,6 @@ namespace Hyperion.Extensions
             {
                 var tfields =
                     current
-                        .GetTypeInfo()
                         .GetFields(BindingFlagsEx.All)
 #if SERIALIZATION
                         .Where(f => !f.IsDefined(typeof(NonSerializedAttribute)))

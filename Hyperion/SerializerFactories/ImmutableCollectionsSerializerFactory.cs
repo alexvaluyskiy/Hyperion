@@ -38,10 +38,9 @@ namespace Hyperion.SerializerFactories
         private static Type GetEnumerableType(Type type)
         {
             return type
-                .GetTypeInfo()
                 .GetInterfaces()
                 .Where(intType => intType.GetTypeInfo().IsGenericType && intType.GetTypeInfo().GetGenericTypeDefinition() == typeof (IEnumerable<>))
-                .Select(intType => intType.GetTypeInfo().GetGenericArguments()[0])
+                .Select(intType => intType.GetGenericArguments()[0])
                 .FirstOrDefault();
         }
 
@@ -62,7 +61,7 @@ namespace Hyperion.SerializerFactories
                 Type.GetType(ImmutableCollectionsNamespace + "." + typeName + ", " + ImmutableCollectionsAssembly);
 
             var genericTypes = elementType.GetTypeInfo().IsGenericType
-                   ? elementType.GetTypeInfo().GetGenericArguments()
+                   ? elementType.GetGenericArguments()
                    : new[] { elementType };
 
             // if creatorType == null it means that type is probably an interface
@@ -74,7 +73,7 @@ namespace Hyperion.SerializerFactories
             var isStack = stackInterface.IsAssignableFrom(type);
 
             var createRange = creatorType != null
-                ? creatorType.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Static)
+                ? creatorType.GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .First(methodInfo => methodInfo.Name == "CreateRange" && methodInfo.GetParameters().Length == 1)
                 .MakeGenericMethod(genericTypes)
                 : null;

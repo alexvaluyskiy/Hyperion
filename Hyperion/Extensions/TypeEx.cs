@@ -73,7 +73,6 @@ namespace Hyperion.Extensions
                 .GetTypeInfo()
                 .Assembly
                 .GetType("System.Runtime.Serialization.FormatterServices")
-                ?.GetTypeInfo()
                 ?.GetMethod("GetUninitializedObject", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
                 ?.CreateDelegate(typeof(Func<Type, object>));
 
@@ -162,7 +161,7 @@ namespace Hyperion.Extensions
 
         public static Type GetNullableElement(this Type type)
         {
-            return type.GetTypeInfo().GetGenericArguments()[0];
+            return type.GetGenericArguments()[0];
         }
 
         public static bool IsFixedSizeType(this Type type)

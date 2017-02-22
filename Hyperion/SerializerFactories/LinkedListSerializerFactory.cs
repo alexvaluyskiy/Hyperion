@@ -47,7 +47,7 @@ namespace Hyperion.SerializerFactories
 
         private static Type GetLinkedListType(Type type)
         {
-            return type.GetTypeInfo().GetGenericArguments()[0];
+            return type.GetGenericArguments()[0];
         }
 
         public override ValueSerializer BuildSerializer(Serializer serializer, Type type,

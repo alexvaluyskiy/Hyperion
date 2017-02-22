@@ -25,7 +25,6 @@ namespace Hyperion.SerializerFactories
         private static bool IsInterface(Type type)
         {
             return type
-                .GetTypeInfo()
                 .GetInterfaces()
                 .Select(t => t.GetTypeInfo().IsGenericType && t.GetTypeInfo().GetGenericTypeDefinition() == typeof (IDictionary<,>))
                 .Any(isDict => isDict);

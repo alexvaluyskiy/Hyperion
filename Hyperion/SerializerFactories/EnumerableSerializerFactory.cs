@@ -24,18 +24,18 @@ namespace Hyperion.SerializerFactories
         {
             //TODO: check for constructor with IEnumerable<T> param
 
-            var countProperty = type.GetTypeInfo().GetProperty("Count");
+            var countProperty = type.GetProperty("Count");
             if (countProperty == null || countProperty.PropertyType != typeof(int))
                 return false;
 
-            if (!type.GetTypeInfo().GetMethods().Any(IsAddMethod))
+            if (!type.GetMethods().Any(IsAddMethod))
                 return false;
 
             var isGenericEnumerable = GetEnumerableType(type) != null;
             if (isGenericEnumerable)
                 return true;
 
-            if (typeof(ICollection).GetTypeInfo().IsAssignableFrom(type))
+            if (typeof(ICollection).IsAssignableFrom(type))
                 return true;
 
             return false;
@@ -61,10 +61,9 @@ namespace Hyperion.SerializerFactories
         private static Type GetEnumerableType(Type type)
         {
             return type
-                .GetTypeInfo()
                 .GetInterfaces()
                 .Where(intType => intType.GetTypeInfo().IsGenericType && intType.GetTypeInfo().GetGenericTypeDefinition() == typeof(IEnumerable<>))
-                .Select(intType => intType.GetTypeInfo().GetGenericArguments()[0])
+                .Select(intType => intType.GetGenericArguments()[0])
                 .FirstOrDefault();
         }
 
@@ -78,9 +77,9 @@ namespace Hyperion.SerializerFactories
             var elementType = GetEnumerableType(type) ?? typeof(object);
             var elementSerializer = serializer.GetSerializerByType(elementType);
 
-            var countProperty = type.GetTypeInfo().GetProperty("Count");
-            var addRange = type.GetTypeInfo().GetMethod("AddRange");
-            var add = type.GetTypeInfo().GetMethod("Add");
+            var countProperty = type.GetProperty("Count");
+            var addRange = type.GetMethod("AddRange");
+            var add = type.GetMethod("Add");
 
             Func<object, int> countGetter = o => (int)countProperty.GetValue(o);
 

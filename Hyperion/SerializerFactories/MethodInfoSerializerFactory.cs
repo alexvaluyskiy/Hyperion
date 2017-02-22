@@ -49,7 +49,7 @@ namespace Hyperion.SerializerFactories
                     null);
                 return method;
 #else
-                var methods = owner.GetTypeInfo()
+                var methods = owner
                     .GetMethods(BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public |
                                 BindingFlags.NonPublic);
                 var method = methods.FirstOrDefault(m => m.Name == name &&

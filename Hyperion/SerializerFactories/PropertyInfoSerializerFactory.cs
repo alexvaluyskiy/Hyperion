@@ -37,7 +37,7 @@ namespace Hyperion.SerializerFactories
                 var name = stream.ReadString(session);
                 var owner = stream.ReadObject(session) as Type;
 
-                var property = owner.GetTypeInfo().GetProperty(name, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var property = owner.GetProperty(name, BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 return property;
             };
             ObjectWriter writer = (stream, obj, session) =>
